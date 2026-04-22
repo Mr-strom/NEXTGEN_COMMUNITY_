@@ -1,13 +1,169 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* Futuristic light theme - cool blue-gray base */
+    --background: 220 20% 97%;
+    --foreground: 222 30% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 30% 12%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 30% 12%;
+    --primary: 187 100% 42%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 15% 93%;
+    --secondary-foreground: 222 25% 22%;
+    --muted: 220 15% 93%;
+    --muted-foreground: 222 10% 48%;
+    --accent: 270 60% 94%;
+    --accent-foreground: 270 80% 35%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 15% 88%;
+    --input: 220 15% 88%;
+    --ring: 187 100% 42%;
+
+    /* Genzoo brand: cyan / electric blue */
+    --reddit-orange: 187 100% 42%;
+    --reddit-orange-hover: 187 100% 36%;
+    --reddit-blue: 270 80% 55%;
+    --upvote-color: 187 100% 50%;
+    --downvote-color: 280 70% 55%;
+  }
+
+  .dark {
+    /* Futuristic dark: deep space blue, neon cyan & violet */
+    --background: 222 35% 7%;
+    --foreground: 210 20% 96%;
+    --card: 222 30% 11%;
+    --card-foreground: 210 20% 96%;
+    --popover: 222 28% 13%;
+    --popover-foreground: 210 20% 96%;
+    --primary: 187 100% 50%;
+    --primary-foreground: 222 35% 7%;
+    --secondary: 222 25% 18%;
+    --secondary-foreground: 210 20% 96%;
+    --muted: 222 25% 18%;
+    --muted-foreground: 215 15% 58%;
+    --accent: 270 40% 22%;
+    --accent-foreground: 210 20% 96%;
+    --destructive: 0 62% 50%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 222 25% 20%;
+    --input: 222 25% 20%;
+    --ring: 187 100% 50%;
+
+    --reddit-orange: 187 100% 55%;
+    --reddit-orange-hover: 187 100% 62%;
+    --reddit-blue: 270 80% 65%;
+    --upvote-color: 187 100% 55%;
+    --downvote-color: 280 70% 60%;
+  }
+
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Space Grotesk", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  }
+
+  html {
+    color-scheme: light;
+  }
+
+  html.dark {
+    color-scheme: dark;
+  }
+
+  /* Futuristic dark: subtle gradient background */
+  html.dark body {
+    background-image:
+      radial-gradient(ellipse 120% 80% at 50% -20%, hsl(222 50% 18% / 0.55), transparent),
+      radial-gradient(ellipse 80% 50% at 80% 50%, hsl(200 70% 20% / 0.25), transparent),
+      radial-gradient(ellipse 120% 120% at 0% 100%, hsl(260 50% 20% / 0.2), transparent);
+  }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* Custom scrollbar - futuristic thin track */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  @apply bg-border rounded-full;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.6);
+}
+
+/* Vote button animations */
+.vote-btn {
+  transition: transform 0.1s ease, color 0.15s ease;
+}
+.vote-btn:active {
+  transform: scale(0.85);
+}
+
+/* Genzoo layout */
+#root {
+  min-height: 100vh;
+}
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: "Space Grotesk", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+@supports not (color: hsl(var(--foreground))) {
+  body {
+    background-color: #0c1222;
+    color: #e2e8f0;
+  }
+}
+
+main {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Futuristic cards: subtle glow on dark */
+article.bg-card,
+.bg-card {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+}
+html.dark article.bg-card,
+html.dark .bg-card {
+  box-shadow: 0 0 0 1px hsl(var(--border)), 0 4px 24px -4px rgba(0, 0, 0, 0.4);
+}
+
+.text-reddit-orange {
+  color: hsl(var(--reddit-orange));
+}
+.bg-reddit-orange {
+  background-color: hsl(var(--reddit-orange));
+}
+.text-upvote {
+  color: hsl(var(--upvote-color));
+}
+.text-downvote {
+  color: hsl(var(--downvote-color));
+}
+
+/* Optional glow for brand elements */
+.shadow-glow-cyan {
+  box-shadow: 0 0 12px hsl(var(--reddit-orange) / 0.4);
+}
+
+.glass-panel {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(var(--card)) 60%);
+  border: 1px solid hsl(var(--border) / 0.7);
+  backdrop-filter: blur(14px);
 }
